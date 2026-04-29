@@ -23,9 +23,9 @@ public class UserRepository {
         byEmail.put(user.email(), user);
     }
 
-    // TODO 2.1: Буцах төрлийг Optional<User> болгож өөрчлөх
+
     public Optional<User> findByEmail(String email) {
-        // Optional.ofNullable нь утга байвал Optional.of(), null байвал Optional.empty() буцаана
+        
         return Optional.ofNullable(byEmail.get(email));
     }
 }

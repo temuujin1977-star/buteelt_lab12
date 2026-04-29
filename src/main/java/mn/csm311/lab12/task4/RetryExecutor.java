@@ -53,24 +53,7 @@ public class RetryExecutor {
         this.sleeper = sleeper;
     }
 
-    /**
-     * op-ыг retry логиктайгаар ажиллуулна.
-     *
-     * TODO 4.1: Доорх псевдо-кодыг бодит Java болгож хэрэгжүүл.
-     *
-     *   for (attempt = 1 .. maxAttempts):
-     *       try:
-     *           return op.get()
-     *       catch (NonRetryableException e):
-     *           throw e                            // дахин оролдохгүй
-     *       catch (RuntimeException e):
-     *           lastError = e
-     *           if attempt == maxAttempts: break   // хамгийн сүүлд — дахин хүлээхгүй
-     *           long delay = baseDelayMs * 2^(attempt-1) + random(0..baseDelayMs)
-     *           sleeper.sleep(delay)
-     *
-     *   throw lastError
-     */
+   
     public <T> T execute(Supplier<T> op) {
         RuntimeException lastError = null;
 
@@ -78,7 +61,7 @@ public class RetryExecutor {
             try {
                 return op.get();
             } catch (NonRetryableException e) {
-                // TODO 4.1: Дахин оролдох ёсгүй алдааг шууд цааш шиднэ
+                
                 throw e;
             } catch (RuntimeException e) {
                 lastError = e;
@@ -106,7 +89,6 @@ public class RetryExecutor {
             }
         }
 
-        // Хэрэв бүх оролдлого бүтэлгүйтвэл хамгийн сүүлийн алдааг шиднэ
         throw lastError;
     }
 }

@@ -11,26 +11,24 @@ import java.util.Map;
 public class FileConfigLoader {
 
     public AppConfig load(Path path) {
-        // TODO 3.1: path null бол fail-fast (IllegalArgumentException)
         if (path == null) {
             throw new IllegalArgumentException("path must not be null");
         }
 
         Map<String, String> props = new HashMap<>();
 
-        // TODO 3.2: try-with-resources ашиглан Reader-ыг нээх
-        // Ингэснээр close() автоматаар дуудагдана (Асуудал B-г шийднэ)
+        
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 parseLine(line, props);
             }
         } 
-        // TODO 3.3: NoSuchFileException-ыг тусад нь барих (Асуудал D)
+    
         catch (NoSuchFileException e) {
             throw new ConfigLoadException("config file not found: " + path, e);
         } 
-        // TODO 3.4: Бусад IOException-ыг ConfigLoadException болгон хөрвүүлэх (Асуудал C)
+    
         catch (IOException e) {
             throw new ConfigLoadException("failed to read config: " + path, e);
         }
